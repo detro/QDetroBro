@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'QDetroBro.h'
 **
-** Created: Thu 9. Jul 17:40:26 2009
+** Created: Fri 24. Jul 16:47:48 2009
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.2-tower)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_QDetroBro[] = {
        2,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   12, // methods
+       6,   12, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,23 +32,24 @@ static const uint qt_meta_data_QDetroBro[] = {
       11,   10,   10,   10, 0x08,
       24,   10,   10,   10, 0x08,
       38,   10,   10,   10, 0x08,
-      60,   55,   10,   10, 0x08,
-      95,   88,   10,   10, 0x08,
-     123,   10,   10,   10, 0x08,
-     138,   10,   10,   10, 0x08,
+      62,   55,   10,   10, 0x08,
+      95,   90,   10,   10, 0x08,
+     155,  123,   10,   10, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QDetroBro[] = {
     "QDetroBro\0\0initialize()\0loadHomeUrl()\0"
-    "loadCurrentUrl()\0aUrl\0updateAddressLineEdit(QUrl)\0"
-    "aValue\0updateWebViewZoomLevel(int)\0"
-    "setAsLoading()\0setAsDoneLoading()\0"
+    "loadCurrentUrl()\0aValue\0"
+    "updateWebViewZoomLevel(int)\0aUrl\0"
+    "updateAddressLineEdit(QUrl)\0"
+    "aOldFocusWidget,aNowFocusWidget\0"
+    "handleFocusChange(QWidget*,QWidget*)\0"
 };
 
 const QMetaObject QDetroBro::staticMetaObject = {
-    { &QMainWindow::staticMetaObject, qt_meta_stringdata_QDetroBro,
+    { &QWidget::staticMetaObject, qt_meta_stringdata_QDetroBro,
       qt_meta_data_QDetroBro, 0 }
 };
 
@@ -62,12 +63,12 @@ void *QDetroBro::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_QDetroBro))
         return static_cast<void*>(const_cast< QDetroBro*>(this));
-    return QMainWindow::qt_metacast(_clname);
+    return QWidget::qt_metacast(_clname);
 }
 
 int QDetroBro::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QMainWindow::qt_metacall(_c, _id, _a);
+    _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
@@ -75,13 +76,12 @@ int QDetroBro::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 0: initialize(); break;
         case 1: loadHomeUrl(); break;
         case 2: loadCurrentUrl(); break;
-        case 3: updateAddressLineEdit((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 4: updateWebViewZoomLevel((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: setAsLoading(); break;
-        case 6: setAsDoneLoading(); break;
+        case 3: updateWebViewZoomLevel((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: updateAddressLineEdit((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 5: handleFocusChange((*reinterpret_cast< QWidget*(*)>(_a[1])),(*reinterpret_cast< QWidget*(*)>(_a[2]))); break;
         default: ;
         }
-        _id -= 7;
+        _id -= 6;
     }
     return _id;
 }

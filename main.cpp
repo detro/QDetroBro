@@ -32,6 +32,7 @@
 
 #include <QtGui>
 #include <QApplication>
+#include <QtWebKit/QWebView>
 
 #ifdef Q_OS_SYMBIAN
 #include "sym_iap_util.h"
@@ -39,11 +40,23 @@
 
 int main(int argc, char *argv[])
 {
+#if !defined(Q_WS_S60)
+    QApplication::setGraphicsSystem("raster");
+#endif
+    
+    // Create the Application
     QApplication app(argc, argv);
+    
+    // Init the required Resources
+    Q_INIT_RESOURCE(images);
+    
+    // Init the Window/Widget that contains the actual App
     QDetroBro window;
     
     app.setApplicationName("QDetroBro");
-    app.setApplicationVersion("1.0.0");
+    app.setApplicationVersion("0.2beta");
+    app.setOrganizationName("France Telecom R&D - Orange Labs UK");
+    app.setOrganizationDomain("orange.com");
     
 #ifdef Q_OS_SYMBIAN
     window.showFullScreen();

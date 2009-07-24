@@ -31,14 +31,31 @@
 #ifndef QDETROBRO_H
 #define QDETROBRO_H
 
-#include <QtGui/QMainWindow>
-#include "ui_QDetroBro.h"
+// External
+#include <QtWebKit/QWebView>
+// Internal
+#include "AddressBarWidget.h"
+#include "NavigationBarWidget.h"
 
+// Constants/Macros
+#define STARTING_ZOOM_LEVEL 100
+#define HOME_URL "http://www.google.com/"
+//#define HOME_URL "file:///c:/index.html"
+#define STYLE_SHEET " \
+	QAbstractButton, QLineEdit, QProgressBar, QSlider { \
+		background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 0, 0, 180), stop:1 rgba(0,0,0,140)); \
+		border: 2px solid black; \
+		border-radius: 5px; \
+	} \
+	\
+	QAbstractButton:pressed, QLineEdit:focus { \
+		background-color: rgba(0, 0, 0, 200); \
+	}"
+
+// Pre-declaration
 class QUrl;
 
-#define MHOME_URL "http://news.bbc.co.uk/text_only.stm"
-
-class QDetroBro : public QMainWindow
+class QDetroBro : public QWidget
 {
     Q_OBJECT
 
@@ -50,15 +67,17 @@ private slots:
     void initialize();
     void loadHomeUrl();
     void loadCurrentUrl();
-    void updateAddressLineEdit(const QUrl& aUrl);
     void updateWebViewZoomLevel(int aValue);
-    void setAsLoading();
-    void setAsDoneLoading();
+    void updateAddressLineEdit(const QUrl& aUrl);
+    void handleFocusChange(QWidget* aOldFocusWidget, QWidget* aNowFocusWidget);
+
+protected:
+    void resizeEvent(QResizeEvent *event);
     
-private:
-    Ui::QDetroBroClass ui;
-    QUrl* iHomeUrl;
-    int iCurrentZoomLevel;
+private:    
+    QWebView* iWebView;
+    AddressBarWidget* iAddressBarWidget;
+    NavigationBarWidget* iNavigationBarWidget;
 };
 
 #endif // QDETROBRO_H

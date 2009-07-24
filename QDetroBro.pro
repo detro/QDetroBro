@@ -1,15 +1,22 @@
 TARGET = QDetroBro
-QT += core \
-    gui \
-    webkit \
-    network
-HEADERS += FlickCharm.h \
+TEMPLATE = app
+VERSION = 0.2.0 
+QT += network \
+    webkit
+HEADERS += NavigationBarWidget.h \
+    ChaseWidget.h \
+    AddressBarWidget.h \
+    FlickCharm.h \
     QDetroBro.h
-SOURCES += FlickCharm.cpp \
+SOURCES += NavigationBarWidget.cpp \
+    ChaseWidget.cpp \
+    AddressBarWidget.cpp \
+    FlickCharm.cpp \
     main.cpp \
     QDetroBro.cpp
-FORMS += QDetroBro.ui
-RESOURCES += 
+FORMS += NavigationBarWidget.ui \
+    AddressBarWidget.ui
+RESOURCES += images.qrc
 symbian { 
     HEADERS += sym_iap_util.h
     SOURCES += QDetroBro_reg.rss

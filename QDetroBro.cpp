@@ -39,96 +39,117 @@
 QUrl guessUrlFromString(const QString &string);
 
 QDetroBro::QDetroBro(QWidget *parent)
-    :
-    QMainWindow(parent),
-    iHomeUrl(new QUrl(MHOME_URL)),
-    iCurrentZoomLevel(100)
-{
-	ui.setupUi(this);
+		:
+		QWidget(parent),
+		iWebView(0),
+		iAddressBarWidget(0),
+		iNavigationBarWidget(0)
+	{
+	// Load and Apply Stylesheet to the Application
+	qApp->setStyleSheet(STYLE_SHEET);
+
+	// Allocating the UI elements
+	iWebView = new QWebView(this);
+	iAddressBarWidget = new AddressBarWidget(this);
+	iNavigationBarWidget = new NavigationBarWidget(this);
+	
+	// Second-phase Initialization
 	QTimer::singleShot(0, this, SLOT(initialize()));
-}
+	}
 
 void QDetroBro::initialize()
 	{
-	// Connect buttons' signals to the proper slot
-	// Signals that make the WebView go Back and Forward in the History
-	connect(ui.BackButton, SIGNAL(clicked()), ui.WebView, SLOT(back()));
-	connect(ui.ForwardButton, SIGNAL(clicked()), ui.WebView, SLOT(forward()));
-	// Signals that make the WebView reload the current page
-	connect(ui.ReloadButton, SIGNAL(clicked()), ui.WebView, SLOT(reload()));
-	// Signals managed by this Class's Slots
-	connect(ui.HomeButton, SIGNAL(clicked()), this, SLOT(loadHomeUrl()));
-	connect(ui.GoButton, SIGNAL(clicked()), this, SLOT(loadCurrentUrl()));
-	connect(ui.WebView, SIGNAL(urlChanged(const QUrl&)), this, SLOT(updateAddressLineEdit(const QUrl&)));
-	connect(ui.ZoomSlider, SIGNAL(valueChanged(int)), this, SLOT(updateWebViewZoomLevel(int)));
-	// Signals that Reset the Progress Bar
-	connect(ui.GoButton, SIGNAL(clicked()), ui.ProgressBar, SLOT(reset()));
-	connect(ui.HomeButton, SIGNAL(clicked()), ui.ProgressBar, SLOT(reset()));
-	connect(ui.ReloadButton, SIGNAL(clicked()), ui.ProgressBar, SLOT(reset()));
-	connect(ui.WebView, SIGNAL(loadStarted()), ui.ProgressBar, SLOT(reset()));
-	// Signals that Set a Value on the Progress Bar
-	connect(ui.WebView, SIGNAL(loadProgress(int)), ui.ProgressBar, SLOT(setValue(int)));
-	// Signals that Set the "Loading Label" using this Class's Slots
-	connect(ui.GoButton, SIGNAL(clicked()), this, SLOT(setAsLoading()));
-	connect(ui.HomeButton, SIGNAL(clicked()), this, SLOT(setAsLoading()));
-	connect(ui.ReloadButton, SIGNAL(clicked()), this, SLOT(setAsLoading()));
-	connect(ui.WebView, SIGNAL(loadStarted()), this, SLOT(setAsLoading()));
-	connect(ui.WebView, SIGNAL(loadFinished(bool)), this, SLOT(setAsDoneLoading()));
-	
-	// Setting the WebView
-	QPalette pal = ui.WebView->palette();
+	// Initializing the QWebView
+	QPalette pal = iWebView->palette();
 	pal.setBrush(QPalette::Base, Qt::white);
-	ui.WebView->setPalette(pal);
-	updateWebViewZoomLevel(ui.ZoomSlider->value());
+	iWebView->setPalette(pal);
+	updateWebViewZoomLevel(STARTING_ZOOM_LEVEL);
 	// Applying the WebView Touch Events Handler
 	FlickCharm *flickCharm = new FlickCharm(this);
-	flickCharm->activateOn(ui.WebView);
+	flickCharm->activateOn(iWebView);
+	iWebView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	
+	// Give focus to the WebView
+	iWebView->setFocus();
+
+	// iNavigationBarWidget Signals
+	connect(iNavigationBarWidget, SIGNAL(backClicked()), iWebView, SLOT(back()));
+	connect(iNavigationBarWidget, SIGNAL(forwardClicked()), iWebView, SLOT(forward()));
+	connect(iNavigationBarWidget, SIGNAL(homeClicked()), this, SLOT(loadHomeUrl()));
+	connect(iNavigationBarWidget, SIGNAL(zoomLevelChanged(int)), this, SLOT(updateWebViewZoomLevel(int)));
+	// iAddressBarWidget Signals
+	connect(iAddressBarWidget, SIGNAL(reloadClicked()), iWebView, SLOT(reload()));
+	connect(iAddressBarWidget, SIGNAL(goClicked()), this, SLOT(loadCurrentUrl()));
+	// iWebView Signals
+	connect(iWebView, SIGNAL(urlChanged(const QUrl&)), this, SLOT(updateAddressLineEdit(const QUrl&)));
+	connect(iWebView, SIGNAL(loadStarted()), iAddressBarWidget, SLOT(setLoadingStarted()));
+	connect(iWebView, SIGNAL(loadProgress(int)), iAddressBarWidget, SLOT(setLoadingProgress(int)));
+	connect(iWebView, SIGNAL(loadFinished(bool)), iAddressBarWidget, SLOT(setLoadingFinished()));
+	// Connect to Signal to know about Focus Change events within the App
+	connect(qApp, SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(handleFocusChange(QWidget*, QWidget*)));
+	// Connect the Sliding so that a click on one Slide, makes also the other Bar slide
+	connect(iAddressBarWidget, SIGNAL(slideToVisibleClicked()), iNavigationBarWidget, SLOT(slideToVisible()));
+	connect(iAddressBarWidget, SIGNAL(slideToInvisibleClicked()), iNavigationBarWidget, SLOT(slideToInvisible()));
+	connect(iNavigationBarWidget, SIGNAL(slideToVisibleClicked()), iAddressBarWidget, SLOT(slideToVisible()));
+	connect(iNavigationBarWidget, SIGNAL(slideToInvisibleClicked()), iAddressBarWidget, SLOT(slideToInvisible()));
 	
 	// Load the Home URL
 	loadHomeUrl();
-	// Give focus to the WebView
-	ui.WebView->setFocus();
 	}
 
 void QDetroBro::loadHomeUrl()
 	{
-	ui.WebView->load(*iHomeUrl);
+	iWebView->load(QUrl(HOME_URL));
 	}
 
 void QDetroBro::loadCurrentUrl()
 	{
-	ui.WebView->load(guessUrlFromString(ui.AddressLineEdit->text()));
+	iWebView->load(guessUrlFromString(iAddressBarWidget->address()));
 	}
 
 void QDetroBro::updateAddressLineEdit(const QUrl& aUrl)
 	{
-	ui.AddressLineEdit->setText(aUrl.toString());
-	}
+	iAddressBarWidget->setAddress(aUrl.toString());
+ 	}
 
 void QDetroBro::updateWebViewZoomLevel(int aValue)
 	{
-	ui.WebView->setZoomFactor(static_cast<qreal>(aValue)/100.0);
+	iWebView->setZoomFactor(static_cast<qreal>(aValue)/100.0);
 	}
 
-void QDetroBro::setAsLoading()
-	{
-	ui.LoadingLabel->setText("load");
-	}
-
-void QDetroBro::setAsDoneLoading()
-	{
-	ui.LoadingLabel->setText("done");
+void QDetroBro::handleFocusChange(QWidget* aOldFocusWidget, QWidget* aNowFocusWidget)
+	{	
+	QWebView* webViewWidget = dynamic_cast<QWebView*>(aNowFocusWidget);
+	if (webViewWidget)
+		{
+		if ( iAddressBarWidget->isFullyVisible() )
+			iAddressBarWidget->slide();
+		
+		if ( iNavigationBarWidget->isFullyVisible() )
+			iNavigationBarWidget->slide();
+		}
 	}
 
 QDetroBro::~QDetroBro()
-{
-	if ( NULL != iHomeUrl )
-		delete iHomeUrl;
-}
+	{
+	// Nothing to do here
+	}
+
+void QDetroBro::resizeEvent(QResizeEvent *event)
+	{
+    QWidget::resizeEvent(event);
+    
+    // Positioning the AddressBarWidget
+    iAddressBarWidget->setGeometry(0, 0, width(), iAddressBarWidget->height());
+    // Positioning the NavigationBarWidget
+    iNavigationBarWidget->setGeometry(0, height() - iNavigationBarWidget->height(), width(), iNavigationBarWidget->height());
+    // Positioning the WebView
+    iWebView->setGeometry(0, 0, width(), height());    
+	}
 
 // from Demo Browser
 QUrl guessUrlFromString(const QString &string)
-{
+	{
     QString urlStr = string.trimmed();
     QRegExp test(QLatin1String("^[a-zA-Z]+\\:.*"));
 
@@ -166,4 +187,4 @@ QUrl guessUrlFromString(const QString &string)
     if (url.scheme().isEmpty())
         url = QUrl::fromEncoded("http://" + string.toUtf8(), QUrl::TolerantMode);
     return url;
-}
+	}
