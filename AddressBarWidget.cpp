@@ -10,6 +10,13 @@ AddressBarWidget::AddressBarWidget(QWidget *parent)
 	ui.setupUi(this);
 	setLoadingFinished(); // Init the Loading part of the UI
 	
+	// Setting up the Icons for the "GoStopPushButton"
+	iStopIcon.addFile(QString::fromUtf8(":/images/stop.png"), QSize(), QIcon::Normal, QIcon::On);
+	iGoIcon.addFile(QString::fromUtf8(":/images/go.png"), QSize(), QIcon::Normal, QIcon::On);
+	
+	// Setting the Color for the "Busy Loading Chase Widget" (Orange official color)
+	ui.BusyLoadingChaseWidget->setBaseColor(QColor(255, 102, 0));
+	
 	// Creating the Timer
 	iSlidingTimer = new QTimer(this);	
 	
@@ -24,7 +31,7 @@ void AddressBarWidget::initialize()
 	connect(ui.SlidePushButton, SIGNAL(clicked()), this, SLOT(propagateSlideClicked()));
 	connect(ui.SlidePushButton, SIGNAL(clicked()), this, SLOT(slide()));
 	// Connecting internal Signals with external ones
-	connect(ui.GoPushButton, SIGNAL(clicked()), this, SIGNAL(goClicked()));
+	connect(ui.GoStopPushButton, SIGNAL(clicked()), this, SIGNAL(goClicked()));
 	connect(ui.ReloadPushButton, SIGNAL(clicked()), this, SIGNAL(reloadClicked()));
 	}
 
@@ -101,6 +108,9 @@ void AddressBarWidget::setLoadingStarted()
 	ui.BusyLoadingChaseWidget->setAnimated(true);
 	ui.BusyLoadingChaseWidget->show();
 	ui.LoadingProgressBar->show();
+	
+	// Set to show the "Stop" Icon
+	setStopIcon();
 	}
 	
 void AddressBarWidget::setLoadingProgress(const int aProgress)
@@ -113,6 +123,33 @@ void AddressBarWidget::setLoadingFinished()
 	ui.BusyLoadingChaseWidget->setAnimated(false);
 	ui.BusyLoadingChaseWidget->hide();
 	ui.LoadingProgressBar->hide();
+	
+	// Set to show the "Go" Icon
+	setGoIcon();
+	}
+
+void AddressBarWidget::setGoIcon()
+	{
+	ui.GoStopPushButton->setIcon(iGoIcon);
+	ui.GoStopPushButton->setIconSize(QSize(40, 40));
+	ui.GoStopPushButton->setFlat(false);
+	
+	// Put the proper Signal Connections in place:
+	// 	when the GoStopPushButton is clicked, sent a "goClicked" signal.
+	disconnect(ui.GoStopPushButton, SIGNAL(clicked()), this, SIGNAL(stopClicked()));
+	connect(ui.GoStopPushButton, SIGNAL(clicked()), this, SIGNAL(goClicked()));
+	}
+
+void AddressBarWidget::setStopIcon()
+	{
+	ui.GoStopPushButton->setIcon(iStopIcon);
+	ui.GoStopPushButton->setIconSize(QSize(40, 40));
+	ui.GoStopPushButton->setFlat(false);
+	
+	// Put the proper Signal Connections in place:
+	// 	when the GoStopPushButton is clicked, sent a "sopClicked" signal.
+	disconnect(ui.GoStopPushButton, SIGNAL(clicked()), this, SIGNAL(goClicked()));
+	connect(ui.GoStopPushButton, SIGNAL(clicked()), this, SIGNAL(stopClicked()));
 	}
 
 void AddressBarWidget::resizeEvent(QResizeEvent *event)

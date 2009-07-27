@@ -32,7 +32,7 @@
     <number>1</number>
    </property>
    <item row="0" column="7" >
-    <widget class="QPushButton" name="GoPushButton" >
+    <widget class="QPushButton" name="GoStopPushButton" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
        <horstretch>0</horstretch>

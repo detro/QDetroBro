@@ -7,6 +7,7 @@
         <file>images/reload.png</file>
         <file>images/slide-horizontal.png</file>
         <file>images/slide-vertical.png</file>
+        <file>images/stop.png</file>
         <file>images/zoom-in.png</file>
         <file>images/zoom-out.png</file>
     </qresource>

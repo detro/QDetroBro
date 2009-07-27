@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'AddressBarWidget.ui'
 **
-** Created: Fri 24. Jul 16:47:47 2009
+** Created: Mon 27. Jul 15:24:38 2009
 **      by: Qt User Interface Compiler version 4.5.2-tower
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -29,7 +29,7 @@ class Ui_AddressBarWidgetClass
 {
 public:
     QGridLayout *gridLayout;
-    QPushButton *GoPushButton;
+    QPushButton *GoStopPushButton;
     QLineEdit *AddressLineEdit;
     QProgressBar *LoadingProgressBar;
     QPushButton *SlidePushButton;
@@ -48,22 +48,22 @@ public:
         gridLayout->setMargin(11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(2, 2, 2, 0);
-        GoPushButton = new QPushButton(AddressBarWidgetClass);
-        GoPushButton->setObjectName(QString::fromUtf8("GoPushButton"));
+        GoStopPushButton = new QPushButton(AddressBarWidgetClass);
+        GoStopPushButton->setObjectName(QString::fromUtf8("GoStopPushButton"));
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(GoPushButton->sizePolicy().hasHeightForWidth());
-        GoPushButton->setSizePolicy(sizePolicy);
-        GoPushButton->setMinimumSize(QSize(40, 40));
-        GoPushButton->setMaximumSize(QSize(40, 40));
+        sizePolicy.setHeightForWidth(GoStopPushButton->sizePolicy().hasHeightForWidth());
+        GoStopPushButton->setSizePolicy(sizePolicy);
+        GoStopPushButton->setMinimumSize(QSize(40, 40));
+        GoStopPushButton->setMaximumSize(QSize(40, 40));
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/images/go.png"), QSize(), QIcon::Normal, QIcon::On);
-        GoPushButton->setIcon(icon);
-        GoPushButton->setIconSize(QSize(40, 40));
-        GoPushButton->setFlat(false);
+        GoStopPushButton->setIcon(icon);
+        GoStopPushButton->setIconSize(QSize(40, 40));
+        GoStopPushButton->setFlat(false);
 
-        gridLayout->addWidget(GoPushButton, 0, 7, 1, 1);
+        gridLayout->addWidget(GoStopPushButton, 0, 7, 1, 1);
 
         AddressLineEdit = new QLineEdit(AddressBarWidgetClass);
         AddressLineEdit->setObjectName(QString::fromUtf8("AddressLineEdit"));
@@ -135,7 +135,7 @@ public:
     void retranslateUi(QWidget *AddressBarWidgetClass)
     {
         AddressBarWidgetClass->setWindowTitle(QApplication::translate("AddressBarWidgetClass", "AddressBarWidget", 0, QApplication::UnicodeUTF8));
-        GoPushButton->setText(QString());
+        GoStopPushButton->setText(QString());
         SlidePushButton->setText(QString());
         ReloadPushButton->setText(QString());
         Q_UNUSED(AddressBarWidgetClass);

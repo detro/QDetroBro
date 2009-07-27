@@ -54,15 +54,21 @@ private slots:
 	void initialize();
 	void slideTick();
 	void propagateSlideClicked();
+	void setGoIcon();
+	void setStopIcon();
 
 signals:
 	void goClicked();
+	void stopClicked();
 	void reloadClicked();
 	void slideToVisibleClicked();
 	void slideToInvisibleClicked();
   
 private:
     Ui::AddressBarWidgetClass ui;
+    
+    QIcon iStopIcon;
+    QIcon iGoIcon;
     
     // It's supposed to be a value minor or equal '0'
     int iSlidingVPosition;

@@ -80,6 +80,7 @@ void QDetroBro::initialize()
 	// iAddressBarWidget Signals
 	connect(iAddressBarWidget, SIGNAL(reloadClicked()), iWebView, SLOT(reload()));
 	connect(iAddressBarWidget, SIGNAL(goClicked()), this, SLOT(loadCurrentUrl()));
+	connect(iAddressBarWidget, SIGNAL(stopClicked()), iWebView, SLOT(stop()));
 	// iWebView Signals
 	connect(iWebView, SIGNAL(urlChanged(const QUrl&)), this, SLOT(updateAddressLineEdit(const QUrl&)));
 	connect(iWebView, SIGNAL(loadStarted()), iAddressBarWidget, SLOT(setLoadingStarted()));

@@ -49,13 +49,14 @@
 #include <QtGui/QPaintEvent>
 #include <QtGui/QShowEvent>
 
-ChaseWidget::ChaseWidget(QWidget *parent, QPixmap pixmap, bool pixmapEnabled)
+ChaseWidget::ChaseWidget(QWidget *parent, QColor basecolor, QPixmap pixmap, bool pixmapEnabled)
     : QWidget(parent)
     , m_segment(0)
     , m_delay(100)
     , m_step(40)
     , m_timerId(-1)
     , m_animated(false)
+    , m_basecolor(basecolor)
     , m_pixmap(pixmap)
     , m_pixmapEnabled(pixmapEnabled)
 {
@@ -77,6 +78,11 @@ void ChaseWidget::setAnimated(bool value)
     update();
 }
 
+void ChaseWidget::setBaseColor(const QColor basecolor)
+	{
+	m_basecolor = basecolor;
+	}
+
 void ChaseWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
@@ -93,7 +99,7 @@ void ChaseWidget::paintEvent(QPaintEvent *event)
     p.setRenderHint(QPainter::Antialiasing, true);
 
     if(m_animated)
-        p.setPen(Qt::gray);
+    	p.setPen(m_basecolor);
     else
         p.setPen(QPen(palette().dark().color()));
 
@@ -126,8 +132,12 @@ void ChaseWidget::timerEvent(QTimerEvent *event)
 QColor ChaseWidget::colorForSegment(int seg) const
 {
     int index = ((seg + m_segment) % segmentCount());
-    int comp = qMax(0, 255 - (index * (255 / segmentCount())));
-    return QColor(comp, comp, comp, 255);
+    return QColor(
+    		m_basecolor.red(),
+    		m_basecolor.green(),
+    		m_basecolor.blue(),
+    		255 - ( index * ( 255 / segmentCount() ) )
+    		);
 }
 
 int ChaseWidget::segmentCount() const

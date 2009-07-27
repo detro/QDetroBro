@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ChaseWidget.h'
 **
-** Created: Fri 24. Jul 16:47:46 2009
+** Created: Mon 27. Jul 15:24:37 2009
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.2-tower)
 **
 ** WARNING! All changes made in this file will be lost!

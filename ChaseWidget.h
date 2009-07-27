@@ -59,10 +59,14 @@ class ChaseWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ChaseWidget(QWidget *parent = 0, QPixmap pixmap = QPixmap(), bool pixmapEnabled = false);
+    ChaseWidget(QWidget *parent = 0,
+			QColor basecolor = QColor(255, 255, 255),
+			QPixmap pixmap = QPixmap(),
+			bool pixmapEnabled = false);
 
     void setAnimated(bool value);
     void setPixmapEnabled(bool enable);
+    void setBaseColor(const QColor basecolor);
     QSize sizeHint() const;
 
 protected:
@@ -78,6 +82,7 @@ private:
     int m_step;
     int m_timerId;
     bool m_animated;
+    QColor m_basecolor;
     QPixmap m_pixmap;
     bool m_pixmapEnabled;
 };

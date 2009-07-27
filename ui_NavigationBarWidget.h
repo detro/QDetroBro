@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'NavigationBarWidget.ui'
 **
-** Created: Fri 24. Jul 16:47:45 2009
+** Created: Mon 27. Jul 11:29:26 2009
 **      by: Qt User Interface Compiler version 4.5.2-tower
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -157,6 +157,7 @@ public:
         ZoomSlider->setSingleStep(25);
         ZoomSlider->setPageStep(25);
         ZoomSlider->setValue(100);
+        ZoomSlider->setTracking(false);
         ZoomSlider->setOrientation(Qt::Horizontal);
         ZoomSlider->setInvertedAppearance(false);
         ZoomSlider->setInvertedControls(false);
