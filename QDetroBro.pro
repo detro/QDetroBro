@@ -1,6 +1,6 @@
 TARGET = QDetroBro
 TEMPLATE = app
-VERSION = 0.2.1 
+VERSION = 0.2.2 
 QT += network \
     webkit
 HEADERS += NavigationBarWidget.h \
