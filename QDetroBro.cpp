@@ -48,6 +48,16 @@ QDetroBro::QDetroBro(QWidget *parent)
 	// Load and Apply Stylesheet to the Application
 	qApp->setStyleSheet(STYLE_SHEET);
 
+	// Prepare Global WebSettings
+	QWebSettings::globalSettings()->setObjectCacheCapacities(128*1024, 1024*1024, 1024*1024);
+	QWebSettings::globalSettings()->setMaximumPagesInCache(3);    
+	QWebSettings::globalSettings()->setAttribute(QWebSettings::AutoLoadImages, true);
+	QWebSettings::globalSettings()->setAttribute(QWebSettings::JavascriptEnabled, true);
+	QWebSettings::globalSettings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, true);
+	QWebSettings::globalSettings()->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, true);
+	QWebSettings::globalSettings()->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, true);
+	QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalStorageDatabaseEnabled, true);
+	
 	// Allocating the UI elements
 	iWebView = new QWebView(this);
 	iAddressBarWidget = new AddressBarWidget(this);
@@ -100,7 +110,7 @@ void QDetroBro::initialize()
 
 void QDetroBro::loadHomeUrl()
 	{
-	iWebView->load(QUrl(HOME_URL));
+	iWebView->load(guessUrlFromString(HOME_URL));
 	}
 
 void QDetroBro::loadCurrentUrl()

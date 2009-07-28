@@ -59,9 +59,7 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("orange.com");
     
 #ifdef Q_OS_SYMBIAN
-    window.showFullScreen();
-    QWebSettings::globalSettings()->setObjectCacheCapacities(128*1024, 1024*1024, 1024*1024);
-    QWebSettings::globalSettings()->setMaximumPagesInCache(3);
+    window.showFullScreen();    
     qt_SetDefaultIap(); // This will avoid the browser to keep asking for an IAP
 #else
     window.show();

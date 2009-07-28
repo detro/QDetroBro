@@ -39,15 +39,19 @@
 
 // Constants/Macros
 #define STARTING_ZOOM_LEVEL 100
-#define HOME_URL "http://www.google.com/"
+//#define HOME_URL "http://www.google.com/"
 //#define HOME_URL "file:///c:/index.html"
+//#define HOME_URL "http://otren.org/Igloo-TestSuiteWidget/index.html"
+//#define HOME_URL "news.bbc.co.uk/text_only.stm"
+//#define HOME_URL "www.qtsoftware.com"
+#define HOME_URL "mobile.wikipedia.org"
+
 #define STYLE_SHEET " \
 	QAbstractButton, QLineEdit, QSlider { \
 		background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 0, 0, 180), stop:1 rgba(0, 0, 0, 140)); \
 		border: 2px solid rgba(0, 0, 0, 255); \
 		border-radius: 5px; \
 	} \
-	\
 	QAbstractButton:pressed, QLineEdit:focus, QSlider:pressed { \
 		background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 102, 0, 200), stop:1 rgba(204, 68, 0, 200)); \
 		border: 2px solid rgba(255, 102, 0, 255); \
