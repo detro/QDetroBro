@@ -128,7 +128,7 @@ void QDetroBro::updateWebViewZoomLevel(int aValue)
 	iWebView->setZoomFactor(static_cast<qreal>(aValue)/100.0);
 	}
 
-void QDetroBro::handleFocusChange(QWidget* aOldFocusWidget, QWidget* aNowFocusWidget)
+void QDetroBro::handleFocusChange(QWidget* /*aOldFocusWidget*/, QWidget* aNowFocusWidget)
 	{	
 	QWebView* webViewWidget = dynamic_cast<QWebView*>(aNowFocusWidget);
 	if (webViewWidget)
