@@ -240,7 +240,7 @@
   <customwidget>
    <class>ChaseWidget</class>
    <extends>QWidget</extends>
-   <header>chasewidget.h</header>
+   <header>ChaseWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources>

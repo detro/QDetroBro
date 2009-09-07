@@ -21,7 +21,7 @@
 **
 ****************************************************************************/
 
-#include "flickcharm.h"
+#include "FlickCharm.h"
 
 #include <QAbstractScrollArea>
 #include <QApplication>
@@ -31,8 +31,8 @@
 #include <QList>
 #include <QMouseEvent>
 #include <QScrollBar>
-#include <QWebFrame>
-#include <QWebView>
+#include <QtWebKit/QWebFrame>
+#include <QtWebKit/QWebView>
 
 #include <QDebug>
 

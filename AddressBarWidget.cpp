@@ -1,4 +1,4 @@
-#include "addressbarwidget.h"
+#include "AddressBarWidget.h"
 
 AddressBarWidget::AddressBarWidget(QWidget *parent)
 		: QWidget(parent),

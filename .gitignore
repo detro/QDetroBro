@@ -1,0 +1,10 @@
+*.loc
+*.pkg
+*.rss
+bld.inf
+*.mmp
+*.o
+moc_*.*
+ui_*.*
+qrc_*.*
+
